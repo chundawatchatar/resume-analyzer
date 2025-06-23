@@ -26,7 +26,7 @@ This project is a full-stack application designed to analyze a CV against a job 
 
 1.  **Clone the repository:**
     ```sh
-    git https://github.com/chundawatchatar/resume-analyzer.git
+    git clone https://github.com/chundawatchatar/resume-analyzer.git
     cd resume-analyzer
     ```
 
