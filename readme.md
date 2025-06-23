@@ -37,7 +37,7 @@ This project is a full-stack application designed to analyze a CV against a job 
 
 3.  **Set up environment variables:**
 
-    Create a `.env` file in the root of the project and add the **.env.example** file.
+    Create a `.env` file in the root of the project by using **.env.example** file.
     ```sh
     cp .env.example .env
     ```
