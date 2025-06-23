@@ -1,44 +1,33 @@
-import express from "express";
-import cors from "cors";
-import helmet from "helmet";
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { upload } from "./middlewares/fileUpload";
-import dotenv from "dotenv";
-dotenv.config({ path: '../../.env'});
-
-import { rateLimiter } from "./middlewares/rateLimiter";
+import app from "./app";
 import { appRouter } from "./routers";
-import { uploadHandler } from "./services/pdf";
 
-const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Security middleware
-app.use(helmet());
-app.use(cors());
+console.info(`🚀 Attempting to start server on port ${PORT}...`);
+const server = app.listen(PORT);
 
-// Rate limiting
-app.use(rateLimiter);
-
-// Health check
-app.get("/ping", (req, res) => {
-  res.json({ status: "ok", timestamp: new Date().toISOString() });
+// Always log this, even if error happens later
+server.on('listening', () => {
+  console.info(`✅ Server successfully started on port ${PORT}`);
 });
 
-app.post(
-  "/api/upload",
-  upload.fields([
-    { name: "jobDescription", maxCount: 1 },
-    { name: "resume", maxCount: 1 },
-  ]),
-  uploadHandler,
-);
+server.on('error', (error: NodeJS.ErrnoException) => {
+  const bind = typeof PORT === 'string' ? `Pipe ${PORT}` : `Port ${PORT}`;
 
-// tRPC middleware
-app.use("/api/trpc", createExpressMiddleware({ router: appRouter }));
+  // Friendly error messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(`❌ ${bind} requires elevated privileges`);
+      break;
+    case 'EADDRINUSE':
+      console.error(`❌ ${bind} is already in use`);
+      break;
+    default:
+      console.error(`❌ Error occurred:`, error);
+      break;
+  }
 
-app.listen(PORT, () => {
-  console.info(`🚀 Server running on port ${PORT}`);
+  process.exit(1);
 });
 
 export type AppRouter = typeof appRouter;

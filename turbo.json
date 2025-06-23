@@ -1,6 +1,5 @@
 {
   "$schema": "https://turborepo.com/schema.json",
-  "globalDependencies": [".env"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -26,5 +25,15 @@
       "inputs": ["./.env.example", "./.env"],
       "outputs": ["./.env"]
     }
-  }
+  },
+  "globalDependencies": [".env"],
+  "globalEnv":[
+    "PORT",
+    "NODE_ENV",
+    "LOG_LEVEL",
+    "GEMINI_ENDPOINT",
+    "GEMINI_TOKEN",
+    "VITE_API_URL",
+    "WEB_APP_PORT"
+  ]
 }

@@ -3,8 +3,8 @@ import { z } from "zod";
 import { sendToGeminiProxy } from "../services/ai";
 
 const AnalyzeInputSchema = z.object({
-  cvText: z.string(),
-  jdText: z.string(),
+  cvText: z.string().nonempty(),
+  jdText: z.string().nonempty(),
 });
 
 export const analysisRouter = router({

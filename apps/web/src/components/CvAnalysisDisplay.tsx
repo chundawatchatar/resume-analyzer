@@ -161,7 +161,7 @@ const CvAnalysisDisplay: React.FC<CvAnalysisDisplayProps> = ({ analysis }) => {
             {Array.isArray(alignmentAnalysis.recommendations) &&
               alignmentAnalysis.recommendations?.length > 0 && (
                 <div>
-                  <H4 className="text-sm font-medium">Recommendations</H4>
+                  <H4 className="text-sm font-medium">Recommendations for candidate</H4>
                   <ul className="list-disc pl-5 text-sm space-y-1">
                     {alignmentAnalysis.recommendations.map((rec, idx) => (
                       <li key={idx}>{rec}</li>
